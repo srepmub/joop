@@ -5,13 +5,13 @@
       <td id="{{y}}_{{x}}" style="background: green; padding: 5px; margin: 0px; border: 1px solid black"
           ws-send hx-vals='{"pos": "{{y}}_{{x}}"}'>
         {% if board[x][y] == 1 %}
-            <img width="100%" height="100%" src="/static/white.svg"/>
+            <img width="100%" height="100%" src="/joop/static/white.svg"/>
         {% elif board[x][y] == 2 %}
-            <img width="100%" height="100%" src="/static/white_cross.svg"/>
+            <img width="100%" height="100%" src="/joop/static/white_cross.svg"/>
         {% elif board[x][y] == -1 %}
-            <img width="100%" height="100%" src="/static/black.svg"/>
+            <img width="100%" height="100%" src="/joop/static/black.svg"/>
         {% elif board[x][y] == -2 %}
-            <img width="100%" height="100%" src="/static/black_cross.svg"/>
+            <img width="100%" height="100%" src="/joop/static/black_cross.svg"/>
         {% endif %}
       </td>
     {% endfor %}
