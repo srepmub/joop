@@ -165,7 +165,7 @@ class Application(WebSocketApplication):
             self.send(current_client, message)
 
         elif 'username' in message:
-            client_name[current_client] = message['username']
+            client_name[current_client] = message['username'] or '(anon)'
             self.update_panel()
 
         elif 'zit' in message:
