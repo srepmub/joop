@@ -1,0 +1,140 @@
+<html>
+<head>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <script src="https://unpkg.com/htmx-ext-ws@2.0.2"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+<style>
+
+@media only screen and (min-aspect-ratio: 1.7) {
+    :root {
+        --board-size: 100vh;
+    }
+
+    screen {
+        flex-direction: row;
+    }
+}
+
+@media only screen and (max-aspect-ratio: 1.7) {
+    :root {
+        --board-size: min(64vh, 100vw);;
+    }
+
+    screen {
+        flex-direction: column;
+    }
+
+    rechts {
+        height: calc(100vh - var(--board-size));
+    }
+}
+
+:root {
+  --cell-size: calc(var(--board-size) / 8);
+}
+
+screen, html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow: hidden;
+}
+
+screen {
+    display: flex;
+}
+
+rechts {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    justify-content: space-between;
+}
+
+chatbox {
+    flex-grow: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+links {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    justify-content: start;
+}
+
+board {
+    flex-grow: 0;
+    flex-shrink: 0;
+    background-color: green;
+    width: var(--board-size);
+    height: var(--board-size);
+}
+
+panel {
+  display: flex;
+  flex-direction: row;
+  background-color: grey;
+  height: var(--cell-size);
+}
+
+panel img {
+    width: var(--cell-size);
+    height: var(--cell-size);
+}
+
+plname {
+    width: 15%;
+    flex-shrink: 0;
+}
+
+td {
+    width: var(--cell-size);
+    height: var(--cell-size);
+}
+
+input {
+  --pico-spacing: 0px;
+}
+
+</style>
+</head>
+
+<body hx-ext="ws">
+
+<screen ws-connect="/chat">
+    <links>
+        <board id="board">
+            {% include 'board.html' %}
+        </board>
+    </links>
+    <rechts>
+      <panel id="panel">
+          {% include 'panel.html' %}
+      </panel>
+      <input id="yourname" ws-send hx-trigger="input changed delay:500ms" placeholder="(your name)" name="username">
+
+      <chatbox id="nouzeg" style="border:1px solid black;">
+        (entering chat)<br/>
+      </chatbox>
+
+      <form ws-send id="myform" style="padding: 0; margin: 0">
+          <input id="inpoet" name="chat_message" placeholder="(enter message)" autocomplete="off">
+      </form>
+    </rechts>
+</screen>
+
+<div id="audiohere" style="visibility: hidden;">
+</div>
+
+</body>
+</html>
