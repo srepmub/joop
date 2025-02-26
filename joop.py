@@ -100,7 +100,7 @@ class Application(WebSocketApplication):
         self.broadcast('''
 <div hx-swap-oob="beforeend:#audiohere">
 <audio controls autoplay>
-  <source src="/joop/static/ding.wav" type="audio/wav">
+  <source src="/static/ding.wav" type="audio/wav">
 </audio>
 </div>''')
 
