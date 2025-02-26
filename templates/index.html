@@ -124,7 +124,9 @@ input {
       <input id="yourname" ws-send hx-trigger="input changed delay:500ms" placeholder="(your name)" name="username">
 
       <chatbox id="nouzeg" style="border:1px solid black;">
-        (entering chat)<br/>
+          {% for msg in chat %}
+              {{msg}}<br/>
+          {% endfor %}
       </chatbox>
 
       <form ws-send id="myform" style="padding: 0; margin: 0">

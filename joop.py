@@ -14,7 +14,9 @@ flask_app.debug = True
 
 empty, black, white = 0, -1, 1
 directions = [(1, 1), (-1, 1), (0, 1), (1, -1), (-1, -1), (0, -1), (1, 0), (-1, 0)]
+
 online = 0
+last_chat = []
 
 
 def init_board():
@@ -131,7 +133,7 @@ class Application(WebSocketApplication):
         self.broadcast(message)
 
     def on_message(self, message):
-        global turn, board, score, last_move
+        global turn, board, score, last_move, last_chat
         if message is None:
             return
         message = json.loads(message)
@@ -158,11 +160,12 @@ class Application(WebSocketApplication):
 
         elif 'chat_message' in message:
             user = client_name.get(current_client) or '(anon)'
-            msg = message['chat_message']
-            message = f'<div hx-swap-oob="beforeend:#nouzeg">{user}: {msg}<br/></div>'
+            msg = f'{user}: ' + message['chat_message']
+            message = f'<div hx-swap-oob="beforeend:#nouzeg">{msg}<br/></div>'
             self.broadcast(message)
             message = f'<div hx-swap-oob="outerHTML:#inpoet"><input id="inpoet" name="chat_message" placeholder="(enter message)" autocomplete="off" autofocus></div>'
             self.send(current_client, message)
+            last_chat = last_chat[-20:] + [msg]
 
         elif 'username' in message:
             client_name[current_client] = message['username'] or '(anon)'
@@ -202,7 +205,7 @@ class Application(WebSocketApplication):
 
 @flask_app.route('/')
 def index():
-    return render_template('index.html', board=board, **panel_data())
+    return render_template('index.html', board=board, **panel_data(), chat=last_chat+['(entering chat)'])
 
 
 WebSocketServer(
