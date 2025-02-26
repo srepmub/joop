@@ -195,7 +195,7 @@ class Application(WebSocketApplication):
             pass
 
     def broadcast(self, message, all_=True):
-        for client in self.ws.handler.server.clients.values():
+        for client in list(self.ws.handler.server.clients.values()):
             if all_ or client != self.ws.handler.active_client:
                 self.send(client, message)
 
