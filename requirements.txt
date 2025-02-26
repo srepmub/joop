@@ -1,4 +1,4 @@
 gevent
-geventwebsocket
+gevent-websocket
 flask
 werkzeug
