@@ -117,7 +117,7 @@ class Application(WebSocketApplication):
                 self.check_nobody()
 
     def update_panel(self):
-        for client in self.ws.handler.server.clients.values():
+        for client in list(self.ws.handler.server.clients.values()):
             with flask_app.app_context():
                 html = render_template('panel.html', **panel_data(client))
             msg = f'<div hx-swap-oob="innerHTML:#panel">{html}</div>'
