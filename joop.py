@@ -1,3 +1,4 @@
+import html
 import json
 
 from gevent import monkey
@@ -160,7 +161,7 @@ class Application(WebSocketApplication):
 
         elif 'chat_message' in message:
             user = client_name.get(current_client) or '(anon)'
-            msg = f'{user}: ' + message['chat_message']
+            msg = html.escape(f'{user}: ' + message['chat_message'])
             message = f'<div hx-swap-oob="beforeend:#nouzeg">{msg}<br/></div>'
             self.broadcast(message)
             message = f'<div hx-swap-oob="outerHTML:#inpoet"><input id="inpoet" name="chat_message" placeholder="(enter message)" autocomplete="off" autofocus></div>'
