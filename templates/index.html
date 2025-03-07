@@ -7,9 +7,19 @@
 
 <style>
 
+:root {
+    --vh: 1vh; /* Default for older browsers */
+}
+
+@supports (height: 1dvh) {
+    :root {
+        --vh: 1dvh; /* Overrides if dvh is supported */
+    }
+}
+
 @media only screen and (min-aspect-ratio: 1.7) {
     :root {
-        --board-size: 100vh;
+        --board-size: calc(100 * var(--vh));
     }
 
     screen {
@@ -19,7 +29,7 @@
 
 @media only screen and (max-aspect-ratio: 1.7) {
     :root {
-        --board-size: min(64vh, 100vw);;
+        --board-size: min(64 * var(--vh), 100vw);;
     }
 
     screen {
@@ -27,7 +37,7 @@
     }
 
     rechts {
-        height: calc(100vh - var(--board-size));
+        height: calc(100 * var(--vh) - var(--board-size));
     }
 }
 
