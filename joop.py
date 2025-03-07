@@ -4,7 +4,7 @@ import json
 from gevent import monkey
 monkey.patch_all()
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 from werkzeug.debug import DebuggedApplication
 
 from geventwebsocket import WebSocketServer, WebSocketApplication, Resource
@@ -206,13 +206,21 @@ class Application(WebSocketApplication):
 
 @flask_app.route('/')
 def index():
-    return render_template('index.html', board=board, **panel_data(), chat=last_chat+['(entering chat)'])
+    username = request.cookies.get('joop_username')
+    return render_template(
+        'index.html',
+        board=board,
+        **panel_data(),
+        chat=last_chat+['(entering chat)'],
+        username=username
+    )
 
 
 @flask_app.route('/username', methods=['POST'])
 def username():
-    print('USERNAME!', request.form['username'])
-    return '', 204
+    r = make_response('', 200)
+    r.set_cookie('joop_username', request.form['username'], 24*3600*365)
+    return r
 
 
 WebSocketServer(
