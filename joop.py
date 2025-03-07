@@ -206,7 +206,7 @@ class Application(WebSocketApplication):
 
 @flask_app.route('/')
 def index():
-    username = request.cookies.get('joop_username')
+    username = request.cookies.get('joop_username', '')
     return render_template(
         'index.html',
         board=board,
