@@ -72,8 +72,9 @@ chatbox {
     flex-grow: 1;
     overflow: auto;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     height: 10rem;
+    justify-content: flex-end;
 }
 
 links {
@@ -138,10 +139,12 @@ input {
       </form>
       <chatbox id="nouzeg" style="border:1px solid black;">
           {% for user, msg in chat %}
-              {% if user is not none %}
-                {{user}}:
-              {% endif %}
-              {{msg}}<br/>
+              <div>
+                  {% if user is not none %}
+                    {{user}}:
+                  {% endif %}
+                  {{msg}}
+              </div>
           {% endfor %}
       </chatbox>
       <form ws-send id="myform" style="padding: 0; margin: 0">

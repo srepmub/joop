@@ -164,7 +164,7 @@ class Application(WebSocketApplication):
             esc_user = html.escape(user)
             esc_message = html.escape(message['chat_message'])
             msg = f'{esc_user}: {esc_message}'
-            message = f'<div hx-swap-oob="beforeend:#nouzeg">{msg}<br/></div>'
+            message = f'<div hx-swap-oob="beforeend:#nouzeg"><div>{msg}</div></br></div>'
             self.broadcast(message)
             message = f'<div hx-swap-oob="outerHTML:#inpoet"><input id="inpoet" name="chat_message" placeholder="(enter message)" autocomplete="off" autofocus></div>'
             self.send(current_client, message)
