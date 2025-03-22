@@ -161,12 +161,14 @@ class Application(WebSocketApplication):
 
         elif 'chat_message' in message:
             user = client_name.get(current_client) or '(anon)'
-            msg = html.escape(f'{user}: ' + message['chat_message'])
+            esc_user = html.escape(user)
+            esc_message = html.escape(message['chat_message'])
+            msg = f'{esc_user}: {esc_message}'
             message = f'<div hx-swap-oob="beforeend:#nouzeg">{msg}<br/></div>'
             self.broadcast(message)
             message = f'<div hx-swap-oob="outerHTML:#inpoet"><input id="inpoet" name="chat_message" placeholder="(enter message)" autocomplete="off" autofocus></div>'
             self.send(current_client, message)
-            last_chat = last_chat[-20:] + [msg]
+            last_chat = last_chat[-20:] + [(esc_user, esc_message)]
 
         elif 'username' in message:
             client_name[current_client] = message['username'] or '(anon)'
@@ -211,7 +213,7 @@ def index():
         'index.html',
         board=board,
         **panel_data(),
-        chat=last_chat+['(entering chat)'],
+        chat=last_chat + [(None, '(entering chat)')],
         username=username
     )
 

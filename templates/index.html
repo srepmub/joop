@@ -137,7 +137,10 @@ input {
           <div hx-post="/username" hx-trigger="input changed delay:500ms from:#yourname"></div>
       </form>
       <chatbox id="nouzeg" style="border:1px solid black;">
-          {% for msg in chat %}
+          {% for user, msg in chat %}
+              {% if user is not none %}
+                {{user}}:
+              {% endif %}
               {{msg}}<br/>
           {% endfor %}
       </chatbox>
