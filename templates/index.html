@@ -141,9 +141,10 @@ input {
           {% for user, msg in chat %}
               <div>
                   {% if user is not none %}
-                    {{user}}:
+                    <b>{{user}}</b>: {{msg}}
+                  {% else %}
+                    <i>(entering chat)</i>
                   {% endif %}
-                  {{msg}}
               </div>
           {% endfor %}
       </chatbox>
