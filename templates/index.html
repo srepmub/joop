@@ -151,6 +151,7 @@ input {
       <form ws-send id="myform" style="padding: 0; margin: 0">
           <input id="inpoet" name="chat_message" placeholder="(enter message)" autocomplete="off">
       </form>
+      <a ws-send hx-trigger="every 60s" hx-vals='{ "ping": "pong" }'></a>
     </rechts>
 </screen>
 
